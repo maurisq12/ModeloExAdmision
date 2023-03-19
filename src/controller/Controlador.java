@@ -5,9 +5,12 @@
  */
 package controller;
 
+import controller.DAO.SingletonDAO;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import model.Carrera;
 import model.Configuracion;
 import model.FormularioSolicitante;
@@ -84,6 +87,41 @@ public class Controlador {
         elGenerador.asignarCitasASolcitantes();
         elGenerador.notificarFormulario();
         return true;    
+    }
+
+    public void simulacionAplicacionExamen(){
+        List<FormularioSolicitante> todosForms = admFormularios.getFormularios(TEstadoSolicitante.SOLICITANTE);
+        List<Carrera> todasCarreras = SingletonDAO.getInstance().getCarreras();
+        for (Iterator<FormularioSolicitante> it = todosForms.iterator(); it.hasNext();) {
+            FormularioSolicitante pForm = it.next();
+            Random r1 = new Random();
+            int low1 = 1;
+            int high1 = 10;
+            int ausenteRandom = r1.nextInt(high1-low1) + low1;
+            if (ausenteRandom != 3 && ausenteRandom != 6){
+                for (Carrera carrera : todasCarreras){
+                    if (carrera.getNombre().equals(pForm.getCarreraSolic().getNombre())){
+                        Random r2 = new Random();
+                        int low2 = 0;
+                        int high2 = this.getPuntajeGeneralAdmision();
+                        int result = r2.nextInt(high2-low2) + low2;
+                        pForm.getDetalleExamen().setPuntajeObtenido(result);
+                        pForm.setEstado(TEstadoSolicitante.CANDIDATO);
+                        System.out.println("Simulación: Candidato");
+                        System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + result);
+                        break;
+                    }
+                }
+            }else{
+                pForm.getDetalleExamen().setPuntajeObtenido(0);
+                pForm.setEstado(TEstadoSolicitante.AUSENTE);
+                System.out.println("Simulación: Ausente");
+                System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + 0);
+            }    
+        }
+            
+ 
+        
     }    
     
 }

@@ -101,6 +101,12 @@ public class ModeloExAdmision {
         elCtrl.generarCitas();        
     }
     
+    public static void demoSimulacionExamen(){
+        System.out.println("Simulando examen...");
+        elCtrl.simulacionAplicacionExamen();
+    }
+
+    
     public static void main(String[] args) {
         System.out.println("En demoConfiguracion");
         demoConfiguracion();
@@ -114,6 +120,8 @@ public class ModeloExAdmision {
         System.out.println("Generación y notificación de cita de prueba de admisión");
         demoCitas();
         
+        System.out.println("Simulación de Examen de Admisión.");
+        demoSimulacionExamen();
        
      }
     
