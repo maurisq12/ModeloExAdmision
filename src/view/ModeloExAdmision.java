@@ -12,7 +12,10 @@ import controller.IParametros;
 import model.Configuracion;
 import model.DireccionPCD;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -96,6 +99,40 @@ public class ModeloExAdmision {
        Configuracion.getInstance().guardarProperties();
     }
     
+    public static void generacionFormularios(int pCant){
+        int contador = 1;
+        Random r1 = new Random();
+        Random r2 = new Random();
+        for(int i=0;i<pCant;i++){
+            List<String> carreras = new ArrayList(Arrays.asList("IC","PI","AE"));
+            List<String> sedes = new ArrayList(Arrays.asList("CA","SJ","LI","SC","AL"));
+            
+            String carreraR=carreras.get(r1.nextInt(4-1) + 0);
+            String sedeR=sedes.get(r2.nextInt(6-1) + 0);
+
+            String nombreSolic ="Solicitante "+contador;
+            String correoSolic ="correo"+contador+"@gmail.com";
+            String celularSolic ="8123-4567"+contador;
+            String colegioSolic ="Colegio del Solicitante "+contador;
+            DireccionPCD dirSolic = SingletonDAO.getInstance().getPCD(2); 
+            String detalleDir = "Cerquita del Morazán";
+            String carreraSolic = carreraR;
+            String sedeSolic = sedeR;
+
+            DTOFormulario elDTO = new  DTOFormulario(contador, nombreSolic, 
+                                        correoSolic, celularSolic, colegioSolic, 
+                                        dirSolic, detalleDir, carreraSolic, sedeSolic);
+
+            elCtrl.registrarFormulario(elDTO);
+            contador++;
+        }
+        
+    }
+        
+        
+        
+    
+    
     public static void demoCitas(){
         System.out.println("Generando citas...");
         elCtrl.generarCitas();        
@@ -105,6 +142,18 @@ public class ModeloExAdmision {
         System.out.println("Simulando examen...");
         elCtrl.simulacionAplicacionExamen();
     }
+    
+    public static void demoEstados(){
+        System.out.println("Simulando estados de admision de candidatos...");
+        elCtrl.definirSituacionCandidatos();
+    }
+    
+    public static void demoVisualizacionFormulario(int pIdSolicitante){
+        System.out.println("Solicitud para un formulario específico");
+        elCtrl.getDesgloseFormulario(pIdSolicitante);        
+    }
+    
+    
 
     
     public static void main(String[] args) {
@@ -117,11 +166,24 @@ public class ModeloExAdmision {
         System.out.println("En demoFormulario");
         demoFormulario();
         
+        generacionFormularios(50);
+        
         System.out.println("Generación y notificación de cita de prueba de admisión");
         demoCitas();
         
         System.out.println("Simulación de Examen de Admisión.");
         demoSimulacionExamen();
+        
+        System.out.println("Cambio de estados de admisión");
+        demoEstados();
+        
+        System.out.println("Solicitud de un formulario específico");
+        demoVisualizacionFormulario(26);
+        
+        System.out.println();
+        
+        
+        
        
      }
     

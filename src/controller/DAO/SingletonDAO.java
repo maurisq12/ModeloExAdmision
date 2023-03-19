@@ -49,13 +49,29 @@ public class SingletonDAO {
         //carreras de Cartago
         tablaCarreras.add(new Carrera("IC","Ingenieria en Computacion",tablaSedes.get(0), TGrado.BACHILLERATO, 140, 650));
         tablaCarreras.add(new Carrera("PI","Ingenieria en Produccion Industrial",tablaSedes.get(0), TGrado.LICENCIATURA, 100, 620));
+        tablaCarreras.add(new Carrera("AE","Administración de Empresas",tablaSedes.get(0), TGrado.BACHILLERATO, 100, 540));
         
         // carreras de San Jose
         tablaCarreras.add(new Carrera("IC","Ingenieria en Computacion",tablaSedes.get(1), TGrado.BACHILLERATO, 140, 650));
+        tablaCarreras.add(new Carrera("PI","Ingenieria en Produccion Industrial",tablaSedes.get(1), TGrado.LICENCIATURA, 100, 620));
+        tablaCarreras.add(new Carrera("AE","Administración de Empresas",tablaSedes.get(1), TGrado.BACHILLERATO, 100, 540));
         
         // carreras de Limon
-        tablaCarreras.add(new Carrera("PI","Ingenieria en Produccion Industrial",tablaSedes.get(2), TGrado.LICENCIATURA, 40, 520));
-                        
+        tablaCarreras.add(new Carrera("IC","Ingenieria en Computacion",tablaSedes.get(2), TGrado.BACHILLERATO, 140, 650));
+        tablaCarreras.add(new Carrera("PI","Ingenieria en Produccion Industrial",tablaSedes.get(2), TGrado.LICENCIATURA, 100, 620));
+        tablaCarreras.add(new Carrera("AE","Administración de Empresas",tablaSedes.get(2), TGrado.BACHILLERATO, 100, 540));
+        
+        //Carreras San Carlos
+        tablaCarreras.add(new Carrera("IC","Ingenieria en Computacion",tablaSedes.get(3), TGrado.BACHILLERATO, 140, 650));
+        tablaCarreras.add(new Carrera("PI","Ingenieria en Produccion Industrial",tablaSedes.get(3), TGrado.LICENCIATURA, 100, 620));
+        tablaCarreras.add(new Carrera("AE","Administración de Empresas",tablaSedes.get(3), TGrado.BACHILLERATO, 100, 540));
+        
+        //Carreras Alajuela
+        tablaCarreras.add(new Carrera("IC","Ingenieria en Computacion",tablaSedes.get(4), TGrado.BACHILLERATO, 140, 650));
+        tablaCarreras.add(new Carrera("PI","Ingenieria en Produccion Industrial",tablaSedes.get(4), TGrado.LICENCIATURA, 100, 620));
+        tablaCarreras.add(new Carrera("AE","Administración de Empresas",tablaSedes.get(4), TGrado.BACHILLERATO, 100, 540));
+        
+        
         // direcciones PCD
         tablaPCD.add(new DireccionPCD("Cartago", "Central", "Oriental"));       //0
         tablaPCD.add(new DireccionPCD("Cartago", "Central", "Agua Caliente"));  //1
@@ -181,6 +197,15 @@ public class SingletonDAO {
                 formsResult.add(form);
         }
        return formsResult;
+    }
+    
+    public FormularioSolicitante getFormulario (int idFormulario){
+        for (FormularioSolicitante form : tablaFormularios) {
+            if (form.getIdSolic() == idFormulario)
+                return form;
+        }
+        return null;
+       
     }
     
     public List<CentroAplicacion> getCentrosAplicacion(){
