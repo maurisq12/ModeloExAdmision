@@ -88,14 +88,16 @@ public class SingletonDAO {
         
         //fechas establecidas
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar cal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        Calendar cal3 = Calendar.getInstance();
         try {
-            cal.setTime(df.parse("12-08-2023"));
-            tablaFechas.add(cal);
-            cal.setTime(df.parse("19-08-2023"));
-            tablaFechas.add(cal);
-            cal.setTime(df.parse("26-08-2023"));
-            tablaFechas.add(cal);
+            cal1.setTime(df.parse("12-08-2023"));
+            tablaFechas.add(cal1);
+            cal2.setTime(df.parse("19-08-2023"));
+            tablaFechas.add(cal2);
+            cal3.setTime(df.parse("26-08-2023"));
+            tablaFechas.add(cal3);
         } catch (ParseException ex) {
             Logger.getLogger(SingletonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -118,12 +120,7 @@ public class SingletonDAO {
         return tablaSedes;
     }
     
-    public Calendar getFecha(int pos){
-        if (pos >= 0 && pos < tablaFechas.size())
-            return tablaFechas.get(pos);
-        else
-            return null;
-    }
+    
     
     public List<Calendar> getFechas(){
         return tablaFechas;

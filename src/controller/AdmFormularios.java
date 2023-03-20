@@ -67,10 +67,11 @@ public class AdmFormularios {
         List<CentroAplicacion> todosCentros = SingletonDAO.getInstance().getCentrosAplicacion();
         List<Calendar> todasFechas = SingletonDAO.getInstance().getFechas();
         List<FormularioSolicitante> todosFormularios = getFormularios(TEstadoSolicitante.SOLICITANTE);
+        Random rand = new Random();
         for (FormularioSolicitante form : todosFormularios) {
             if (form.getNumero()== numero){
-                Calendar pFechaCita = todasFechas.get(ThreadLocalRandom.current().nextInt(0,todasFechas.size()));
-                CentroAplicacion pCentro = todosCentros.get(ThreadLocalRandom.current().nextInt(0,todosCentros.size()));
+                Calendar pFechaCita = todasFechas.get(rand.nextInt(todasFechas.size()));           
+                CentroAplicacion pCentro = todosCentros.get(rand.nextInt(todosCentros.size()));
                 DatosExamen pDatos = new DatosExamen();
                 pDatos.setCitaExamen(pFechaCita);
                 pDatos.setLugarExamen(pCentro);

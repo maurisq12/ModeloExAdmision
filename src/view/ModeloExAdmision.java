@@ -115,7 +115,7 @@ public class ModeloExAdmision {
             String celularSolic ="8123-4567"+contador;
             String colegioSolic ="Colegio del Solicitante "+contador;
             DireccionPCD dirSolic = SingletonDAO.getInstance().getPCD(2); 
-            String detalleDir = "Cerquita del Morazán";
+            String detalleDir = "Detalle "+contador;
             String carreraSolic = carreraR;
             String sedeSolic = sedeR;
 
@@ -197,9 +197,6 @@ public class ModeloExAdmision {
         demoVisualizacionResultadosEstado("Ingenieria en Produccion Industrial");
         
         System.out.println();
-        
-        
-        
        
      }
     

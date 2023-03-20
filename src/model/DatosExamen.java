@@ -42,7 +42,7 @@ public class DatosExamen {
     public void setPuntajeObtenido(int puntajeObtenido) {
         this.puntajeObtenido = puntajeObtenido;
     }
-
+    
     @Override
     public String toString() {
         return "DatosExamen:\n" + "CitaExamen=" + citaExamen + 
