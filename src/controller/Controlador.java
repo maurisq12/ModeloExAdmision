@@ -101,9 +101,13 @@ public class Controlador {
     public void getDesgloseFormulario(int pIdSolicitante){
         admFormularios.getDesgloseCandidatoPorSolicitante(pIdSolicitante);
     }
-    
-    public void getDesgloseCarreraPuntaje(){
-              
+
+    public void getFormulariosPorCarrera_Solicitante(String carrera) {
+        admFormularios.getDesgloseCandidatosPorSolicitante(carrera);
+    }
+
+    public void getFormulariosPorCarrera_Estado(String carrera) {
+        admFormularios.getDesgloseCandidatosPorEstado(carrera);
     }
     
 }

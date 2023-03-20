@@ -153,6 +153,16 @@ public class ModeloExAdmision {
         elCtrl.getDesgloseFormulario(pIdSolicitante);        
     }
     
+    public static void demoVisualizacionResultadosIdentificacion(String carrera){
+        System.out.println("Resultados de Carrera " + carrera + ": ");
+        elCtrl.getFormulariosPorCarrera_Solicitante(carrera);
+    }
+    
+    public static void demoVisualizacionResultadosEstado(String carrera){
+        System.out.println("Resultados de Carrera con Estado " + carrera + ": ");
+        elCtrl.getFormulariosPorCarrera_Estado(carrera);
+    }
+    
     
 
     
@@ -179,6 +189,12 @@ public class ModeloExAdmision {
         
         System.out.println("Solicitud de un formulario específico");
         demoVisualizacionFormulario(26);
+        
+        System.out.println("Visualizacion de Resultados por Identificación. ");
+        demoVisualizacionResultadosIdentificacion("Ingenieria en Computacion");
+        
+        System.out.println("Visualizacion de Resultados por Estado. ");
+        demoVisualizacionResultadosEstado("Ingenieria en Produccion Industrial");
         
         System.out.println();
         

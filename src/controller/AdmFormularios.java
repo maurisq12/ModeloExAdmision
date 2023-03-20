@@ -9,6 +9,7 @@ import controller.DAO.SingletonDAO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -98,7 +99,7 @@ public class AdmFormularios {
                         pForm.getDetalleExamen().setPuntajeObtenido(result);
                         pForm.setEstado(TEstadoSolicitante.CANDIDATO);
                         System.out.println("Situación: " + pForm.getEstado().toString() );
-                        System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + pForm.getDetalleExamen().getPuntajeObtenido());
+                        System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + pForm.getDetalleExamen().getPuntajeObtenido()+ "\n");
                         break;
                     }
                 }
@@ -106,66 +107,101 @@ public class AdmFormularios {
                 pForm.getDetalleExamen().setPuntajeObtenido(0);
                 pForm.setEstado(TEstadoSolicitante.AUSENTE);
                 System.out.println("Situación: " + pForm.getEstado().toString() );
-                System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + pForm.getDetalleExamen().getPuntajeObtenido());
+                System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + pForm.getDetalleExamen().getPuntajeObtenido()+ "\n") ;
             }    
         }
     }
     
-        public void definirEstadoAdmisionCandidatos(){
-            List<FormularioSolicitante> todosForms = SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.CANDIDATO);
-            for (FormularioSolicitante pForm : todosForms) {
-                if(pForm.getDetalleExamen().getPuntajeObtenido() >= pForm.getCarreraSolic().getPuntajeMinimo() &&  pForm.getCarreraSolic().getMaxAdmision() >0 ){
-                    pForm.setEstado(TEstadoSolicitante.ADMITIDO);
-                    pForm.getCarreraSolic().setMaxAdmision(pForm.getCarreraSolic().getMaxAdmision()-1);
-                }
-                else if(pForm.getDetalleExamen().getPuntajeObtenido() >= pForm.getCarreraSolic().getPuntajeMinimo()){
-                    pForm.setEstado(TEstadoSolicitante.POSTULANTE);
-                }
-                else{
-                    pForm.setEstado(TEstadoSolicitante.RECHAZADO);
-                }
-                System.out.println("Situación: " + pForm.getEstado().toString() );
-                System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + pForm.getDetalleExamen().getPuntajeObtenido());
+    public void definirEstadoAdmisionCandidatos(){
+        List<FormularioSolicitante> todosForms = SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.CANDIDATO);
+        for (FormularioSolicitante pForm : todosForms) {
+            if(pForm.getDetalleExamen().getPuntajeObtenido() >= pForm.getCarreraSolic().getPuntajeMinimo() &&  pForm.getCarreraSolic().getMaxAdmision() >0 ){
+                pForm.setEstado(TEstadoSolicitante.ADMITIDO);
+                pForm.getCarreraSolic().setMaxAdmision(pForm.getCarreraSolic().getMaxAdmision()-1);
             }
-        }
-        
-        public void getDesgloseCandidatoPorSolicitante(int pIdSolicitante){
-            FormularioSolicitante elFormulario = SingletonDAO.getInstance().getFormulario(pIdSolicitante);
-            if(elFormulario != null)
-                if(elFormulario.getEstado()!= TEstadoSolicitante.SOLICITANTE || elFormulario.getEstado()!= TEstadoSolicitante.CANDIDATO){
-                    System.out.println("Datos del estudiante: \n");
-                    System.out.println(elFormulario.getNombreSolic());
-                    System.out.println(elFormulario.getCorreoSolic());
-                    System.out.println(elFormulario.getCelularSolic());
-                    System.out.println(elFormulario.getColegioSolic());
-                    System.out.println(elFormulario.getDirSolicPCD().toString());
-                    System.out.println(elFormulario.getDetalleDirSolic());
-                    System.out.println("Carrera seleccionada: \n");
-                    System.out.println("Carrera: " + elFormulario.getCarreraSolic().getNombre());
-                    System.out.println("Sede: " + elFormulario.getCarreraSolic().getSede().getNombre());
-                    System.out.println("Detalles de admisión del estudiante: \n");
-                    System.out.println("Puntuación mínima necesaria: " + elFormulario.getCarreraSolic().getPuntajeMinimo());
-                    System.out.println("Puntuación obtenida: " + elFormulario.getDetalleExamen().getPuntajeObtenido());
-                    System.out.println("Estado del estudiante:" + elFormulario.getEstado().toString());
-
-                }
-                else{
-                    System.out.println("Aún no se encuentra disponible");
-                }
+            else if(pForm.getDetalleExamen().getPuntajeObtenido() >= pForm.getCarreraSolic().getPuntajeMinimo()){
+                pForm.setEstado(TEstadoSolicitante.POSTULANTE);
+            }
             else{
-                System.out.println("No existe ese formulario");
+                pForm.setEstado(TEstadoSolicitante.RECHAZADO);
             }
+            System.out.println("Situación: " + pForm.getEstado().toString() );
+            System.out.println("Nombre: " + pForm.getNombreSolic() + " Nota: " + pForm.getDetalleExamen().getPuntajeObtenido() + "\n");
         }
+    }
         
-        public void getDesgloseCarreraPuntaje(){
-            List<FormularioSolicitante> listaForms = SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.ADMITIDO);
-            listaForms.addAll(SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.POSTULANTE ));
-            listaForms.addAll(SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.RECHAZADO));
-            
-            
-            
-            
+    public void getDesgloseCandidatoPorSolicitante(int pIdSolicitante){
+        FormularioSolicitante elFormulario = SingletonDAO.getInstance().getFormulario(pIdSolicitante);
+        if(elFormulario != null)
+            if(elFormulario.getEstado()!= TEstadoSolicitante.SOLICITANTE || elFormulario.getEstado()!= TEstadoSolicitante.CANDIDATO){
+                System.out.println("Datos del estudiante: \n");
+                System.out.println(elFormulario.getNombreSolic());
+                System.out.println(elFormulario.getCorreoSolic());
+                System.out.println(elFormulario.getCelularSolic());
+                System.out.println(elFormulario.getColegioSolic());
+                System.out.println(elFormulario.getDirSolicPCD().toString());
+                System.out.println(elFormulario.getDetalleDirSolic());
+                System.out.println("Carrera seleccionada: \n");
+                System.out.println("Carrera: " + elFormulario.getCarreraSolic().getNombre());
+                System.out.println("Sede: " + elFormulario.getCarreraSolic().getSede().getNombre());
+                System.out.println("Detalles de admisión del estudiante: \n");
+                System.out.println("Puntuación mínima necesaria: " + elFormulario.getCarreraSolic().getPuntajeMinimo());
+                System.out.println("Puntuación obtenida: " + elFormulario.getDetalleExamen().getPuntajeObtenido());
+                System.out.println("Estado del estudiante:" + elFormulario.getEstado().toString()+ "\n");
+
+            }
+            else{
+                System.out.println("Aún no se encuentra disponible"+ "\n");
+            }
+        else{
+            System.out.println("No existe ese formulario"+ "\n");
         }
+    }
+        
+    
+    
+    void getDesgloseCandidatosPorSolicitante(String carrera) {
+        List<FormularioSolicitante> todosForms = SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.ADMITIDO);
+        todosForms.addAll(SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.POSTULANTE));
+        todosForms.addAll(SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.RECHAZADO));
+        List<FormularioSolicitante> candidatosSolicitante =  new ArrayList<>();
+        for (Iterator<FormularioSolicitante> it = todosForms.iterator(); it.hasNext();) {
+            FormularioSolicitante form = it.next();
+            if (form.getCarreraSolic().getNombre().equals(carrera)){
+                candidatosSolicitante.add(form);   
+                
+            }    
+        }
+        Collections.sort(candidatosSolicitante, (FormularioSolicitante p1, FormularioSolicitante p2) -> p2.getDetalleExamen().getPuntajeObtenido()-p1.getDetalleExamen().getPuntajeObtenido());
+        //List<FormularioSolicitante> candidatosSolicitanteSorted = candidatosSolicitante.toArray((new String[candidatosSolicitante.size()]));
+        for (Iterator<FormularioSolicitante> it = candidatosSolicitante.iterator(); it.hasNext();) {
+            FormularioSolicitante form = it.next();
+            System.out.println("Identificación: " + form.getNumero());
+            System.out.println("Nota: " + form.getDetalleExamen().getPuntajeObtenido() + "\n");
+        }
+    }
+
+    void getDesgloseCandidatosPorEstado(String carrera) {
+        List<FormularioSolicitante> todosForms = SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.ADMITIDO);
+        todosForms.addAll(SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.POSTULANTE));
+        todosForms.addAll(SingletonDAO.getInstance().getFormulario(TEstadoSolicitante.RECHAZADO));
+        List<FormularioSolicitante> candidatosSolicitante =  new ArrayList<>();
+        for (Iterator<FormularioSolicitante> it = todosForms.iterator(); it.hasNext();) {
+            FormularioSolicitante form = it.next();
+            if (form.getCarreraSolic().getNombre().equals(carrera)){
+                candidatosSolicitante.add(form);   
+                
+            }    
+        }
+        Collections.sort(candidatosSolicitante, (FormularioSolicitante p1, FormularioSolicitante p2) -> p2.getDetalleExamen().getPuntajeObtenido()-p1.getDetalleExamen().getPuntajeObtenido());
+        //List<FormularioSolicitante> candidatosSolicitanteSorted = candidatosSolicitante.toArray((new String[candidatosSolicitante.size()]));
+        for (Iterator<FormularioSolicitante> it = candidatosSolicitante.iterator(); it.hasNext();) {
+            FormularioSolicitante form = it.next();
+            System.out.println("Identificación: " + form.getNumero());
+            System.out.println("Nota: " + form.getDetalleExamen().getPuntajeObtenido());
+            System.out.println("Estado: " + form.getEstado() + "\n");
+        }
+    }
     
     
     
